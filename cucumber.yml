@@ -1,0 +1,72 @@
+##################################################################################
+##Debug
+##################################################################################
+default: -r support/cucumber_env.rb --format json --out=reports/REPORT.json
+
+#Debug profiles: these are for local testing
+debug: -r support/cucumber_env.rb -r features/ -t '@only'
+debug_int_stratus_gateway: -r support/cucumber_env.rb -r features/ -t '@only' -t 'not @wip' -t 'not @not-int'
+debug2: -r support/cucumber_env.rb -r features/ -t '@only2' -t 'not @wip' --format pretty
+ruhul_local: -r support/cucumber_env.rb -t 'not @wip' --format json --out=reports/REPORT.json
+
+##################################################################################
+##Dev
+##################################################################################
+
+#this is a profile for DEV tests. Currently it is for Find and SOLR
+dev: -r support/cucumber_env.rb -r features/ -t '@regression' -t 'not @wip' --format json --out=reports/REPORT_<%= Random.new_seed%>_<%= Time.now.strftime('%Y_%m_%d_%H_%M')%>.json
+dev_parallell: -r support/cucumber_env.rb -r features/ -t '@solr' -t 'not @wip' --format json --out=reports/REPORT_<%= Random.new_seed%>_<%= Time.now.strftime('%Y_%m_%d_%H_%M')%>.json
+
+#this is for fulfillment-links /  access-options
+access_options: -r support/cucumber_env.rb -r features/ -t '@fulfillment-links' -t 'not @wip' --format html --out=reports/REPORT_<%= Time.now.strftime('%Y_%m_%d_%H_%M')%>.html
+
+##################################################################################
+##INT
+##################################################################################
+
+
+#local debugging for INT run
+int_container_test: -r support/cucumber_env.rb -r features/ -t '@nit-container' -t 'not @wip' --format pretty
+
+
+#LOOK: THIS IS THE CORRECT INT STRATUS GATEWAY PROFILE
+int_stratus_gateway_run: -r support/cucumber_env.rb -r features/ -t '@stratus-gateway' -t 'not @wip' -t 'not @not-int' --retry 1 --format pretty --format json --out=reports/int_stratus_find.json
+
+
+#INT regression Jenkins
+int_jenkin_container_regression: -r support/cucumber_env.rb -r features/ -t '@int-container' -t 'not @wip' -t 'not @not-int' --retry 1 --format pretty --format json --out=reports/int_stratus_jenkins.json
+
+#INT STRATUS GATEWAY deployment tests
+int_status_api_instance_deployment: -r support/cucumber_env.rb -r features/ -t '@api_instance' -t 'not @wip' --retry 1 --format pretty --format html --out=reports/api_instance_test_results.html --format json --out=reports/api_instance_test_results.json
+
+
+#production stratus run for when this is applicable
+prod_stratus_container_run: -r support/cucumber_env.rb -r features/ -t '@prod_stratus_run' -t 'not @wip' --retry 1 --format pretty --format html --out=reports/prod_stratus.html
+
+
+#access-options / fulfillment links
+int_access_options_run: -r support/cucumber_env.rb -r features/ -t '@fulfillment-links' -t 'not @wip' -t 'not @dev' --retry 1 --format pretty --format html --out=reports/int_access_options.html --format json --out=reports/int_access_options.json
+prod_access_options_run: -r support/cucumber_env.rb -r features/ -t '@fulfillment-links-prod' -t 'not @wip' --retry 1 --format pretty --format html --out=reports/prod_stratus.html
+
+#this was a profile for solr integration
+solr: -r support/cucumber_env.rb -r features/ -t '@solr' -t 'not @wip' --format html --out=reports/SOLR_report.html --format pretty
+solr_jenkins: -r support/cucumber_env.rb -r features/ -t '@solr' -t 'not @wip' --format json --out=reports/SOLR_report.json --format pretty
+
+solr_explore: -r support/cucumber_env.rb -r features/ -t '@solr' -t 'not @wip' -t 'not @not-explore' -t 'not @not-int' --format json --out=reports/SOLR_report.json --format pretty
+
+########################
+## Misnamed profiles that became important BELOW, do not use
+########################
+#For the INT gateway  deployment tests for INT: http://automation.dev.oclc.org:8080/jenkins/job/PA-DEV-WCNG%20API%20INT%20Deployment%20Tests/
+int_container_run: -r support/cucumber_env.rb -r features/ -t '@nit-container' -t 'not @wip' -t 'not @not-int' --retry 1 --format pretty --format html --out=reports/deployment_stratus.html --format json --out=reports/deployment_stratus.json
+
+#For Container as opposed to gateway
+int_stratus_container_run: -r support/cucumber_env.rb -r features/ -t '@int-container' -t 'not @wip' -t 'not @not-int' --retry 1 --format pretty --format json --out=reports/int_stratus_find.json
+
+########################
+## Misnamed profiles that became important ABOVE, do not use
+########################
+
+##################################################################################
+##Prod
+##################################################################################

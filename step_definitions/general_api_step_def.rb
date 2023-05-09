@@ -94,7 +94,8 @@ Then(/^I expect the response to match the call in file "([^"]*)"$/) do |response
 end
 
 When(/^the request is built for "([^"]*)"$/) do |call|
-  @endpoint_url = load_data('api_config.yml')[ENV['ENVIRONMENT']]['url']
+  @endpoint_url = YAML.load(File.read("./config/api_config.yaml"))["host"]
+  #@endpoint_url = load_all('C:\Users\BrandonLockridge\IdeaProjects\API-Automation-Example\config\api_config.yaml')["host"]
   @endpoint_url += "#{call}?"
 end
 

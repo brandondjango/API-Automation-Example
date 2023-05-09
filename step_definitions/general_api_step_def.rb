@@ -203,19 +203,9 @@ And(/^the key "([^"]*)" should return a float value around "([^"]*)"$/) do |key,
   expect(validation_boolean).to (be true), "Expected response to return a value around \"#{expected_value}\" but it was not in \"#{JSON.parse(@response)}\""
 end
 
-Given(/^User does API get request "([^"]*)"$/) do |query_string|
-  @response = ApiRequest.discovery_stratus_api(query_string)
-end
-
-Then(/^the response contains the "([^"]*)" that contains the "([^"]*)" within$/) do |key, nested_key|
-  expect(@response.body["detailedRecords"][0]["#{key}"][0].to_s).to include(nested_key)
-end
-
 Then(/^User should receive request code "(.*)" in response$/) do |status_code|
   expect(@response.status.to_s).to eq(status_code)
 end
-
-
 
 
 Then(/^the response contains the array key "([^"]*)" that includes the value "([^"]*)"$/) do |expected_key, expected_value|

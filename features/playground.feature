@@ -1,4 +1,3 @@
-
 Feature: Dog Playground
 
 

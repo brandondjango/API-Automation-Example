@@ -23,3 +23,7 @@ gem 'nokogiri'
 gem 'ruby-maven'
 gem 'rexml'
 gem 'parallel_tests', group: [:development, :test]
+
+##gRPC calls
+gem 'grpc'
+gem 'grpc-tools'
